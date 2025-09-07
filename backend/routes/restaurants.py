@@ -4,6 +4,7 @@ from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
 from models.restaurant import Restaurant, RestaurantCreate, RestaurantUpdate
+from models.menu_item import MenuItem
 from config import MONGO_URL, DB_NAME
 
 router = APIRouter(prefix="/api/restaurants", tags=["restaurants"])
