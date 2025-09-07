@@ -52,8 +52,8 @@ const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
               onClick={() => onCategorySelect(category)}
               className={`flex-shrink-0 flex flex-col items-center p-4 rounded-lg border-2 transition-all duration-200 hover:shadow-md min-w-[100px] ${
                 selectedCategory?.id === category.id
-                  ? 'border-red-500 bg-red-50 shadow-md'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  ? 'border-white bg-red-500 shadow-md'
+                  : 'border-red-400 bg-red-500 hover:border-white hover:bg-red-400'
               }`}
             >
               <div 
