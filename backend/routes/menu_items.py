@@ -3,15 +3,14 @@ from typing import List
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
-import os
 from models.menu_item import MenuItem, MenuItemCreate, MenuItemUpdate
+from config import MONGO_URL, DB_NAME
 
 router = APIRouter(prefix="/api/menu-items", tags=["menu-items"])
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 @router.post("/", response_model=MenuItem)
 async def create_menu_item(menu_item: MenuItemCreate):
