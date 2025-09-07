@@ -50,15 +50,15 @@ const RestaurantGrid = ({ selectedCategory, onRestaurantClick }) => {
   }, [selectedCategory, sortBy]);
 
   return (
-    <section className="py-8 bg-gray-50">
+    <section className="py-8 bg-red-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-white">
               {selectedCategory ? selectedCategory.name : 'Todos os restaurantes'}
             </h2>
-            <p className="text-gray-600 mt-1">
+            <p className="text-red-100 mt-1">
               {filteredRestaurants.length} restaurantes encontrados
             </p>
           </div>
