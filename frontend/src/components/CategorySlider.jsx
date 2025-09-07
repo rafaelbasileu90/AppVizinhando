@@ -66,8 +66,8 @@ const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
               </div>
               <span className={`text-sm font-medium text-center ${
                 selectedCategory?.id === category.id
-                  ? 'text-red-600'
-                  : 'text-gray-700'
+                  ? 'text-white'
+                  : 'text-white'
               }`}>
                 {category.name}
               </span>
