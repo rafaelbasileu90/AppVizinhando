@@ -3,15 +3,14 @@ from typing import List, Optional
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
-import os
 from models.restaurant import Restaurant, RestaurantCreate, RestaurantUpdate
+from config import MONGO_URL, DB_NAME
 
 router = APIRouter(prefix="/api/restaurants", tags=["restaurants"])
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 @router.get("/", response_model=List[Restaurant])
 async def get_restaurants(category: Optional[str] = None, search: Optional[str] = None):
