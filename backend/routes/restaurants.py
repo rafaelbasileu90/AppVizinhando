@@ -93,11 +93,11 @@ async def delete_restaurant(restaurant_id: str):
     
     return {"message": "Restaurant deleted successfully"}
 
-@router.get("/{restaurant_id}/menu")
+@router.get("/{restaurant_id}/menu", response_model=List[MenuItem])
 async def get_restaurant_menu(restaurant_id: str):
     """Get menu items for a specific restaurant"""
     if not ObjectId.is_valid(restaurant_id):
         raise HTTPException(status_code=400, detail="Invalid restaurant ID")
     
     menu_items = await db.menu_items.find({"restaurantId": ObjectId(restaurant_id)}).to_list(1000)
-    return menu_items
+    return [MenuItem(**item) for item in menu_items]
