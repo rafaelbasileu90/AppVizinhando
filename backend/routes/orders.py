@@ -4,18 +4,17 @@ from typing import List
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorClient
 from datetime import datetime
-import os
 from models.order import Order, OrderCreate, OrderStatusUpdate, OrderResponse
 from models.user import User
 from services.auth import verify_token
+from config import MONGO_URL, DB_NAME
 
 router = APIRouter(prefix="/api/orders", tags=["orders"])
 security = HTTPBearer()
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
