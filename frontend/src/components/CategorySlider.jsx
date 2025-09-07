@@ -17,16 +17,16 @@ const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
   };
 
   return (
-    <section className="py-8 bg-white">
+    <section className="py-8 bg-red-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Categorias</h2>
+          <h2 className="text-2xl font-bold text-white">Categorias</h2>
           <div className="hidden sm:flex space-x-2">
             <Button
               variant="outline"
               size="icon"
               onClick={() => scroll('left')}
-              className="h-8 w-8"
+              className="h-8 w-8 border-white text-white hover:bg-white hover:text-red-600"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -34,7 +34,7 @@ const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
               variant="outline"
               size="icon"
               onClick={() => scroll('right')}
-              className="h-8 w-8"
+              className="h-8 w-8 border-white text-white hover:bg-white hover:text-red-600"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
