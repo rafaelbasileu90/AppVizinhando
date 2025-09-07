@@ -1,15 +1,14 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
 from motor.motor_asyncio import AsyncIOMotorClient
-import os
 from models.category import Category, CategoryCreate
+from config import MONGO_URL, DB_NAME
 
 router = APIRouter(prefix="/api/categories", tags=["categories"])
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 @router.get("/", response_model=List[Category])
 async def get_categories():
