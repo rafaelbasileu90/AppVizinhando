@@ -11,12 +11,12 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
   const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className="bg-red-600 shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="text-2xl font-bold text-red-600">
+            <div className="text-2xl font-bold text-white">
               Vizinhando
             </div>
           </div>
@@ -26,7 +26,7 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
             {/* Location */}
             <button 
               onClick={onLocationClick}
-              className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors"
+              className="flex items-center space-x-2 text-white hover:text-red-200 transition-colors"
             >
               <MapPin className="h-5 w-5" />
               <span className="text-sm">Lisboa, Portugal</span>
@@ -41,7 +41,7 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
                   placeholder="Buscar restaurantes ou pratos..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-full"
+                  className="pl-10 w-full bg-white text-gray-900"
                 />
               </div>
             </div>
@@ -52,11 +52,11 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
             {/* Cart */}
             <button 
               onClick={onCartClick}
-              className="relative p-2 text-gray-700 hover:text-red-600 transition-colors"
+              className="relative p-2 text-white hover:text-red-200 transition-colors"
             >
               <ShoppingCart className="h-6 w-6" />
               {cartItemsCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-600 text-white text-xs flex items-center justify-center">
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-white text-red-600 text-xs flex items-center justify-center">
                   {cartItemsCount}
                 </Badge>
               )}
@@ -66,7 +66,7 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
             <Button 
               variant="outline" 
               onClick={onUserClick}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 border-white text-white hover:bg-white hover:text-red-600"
             >
               <User className="h-4 w-4" />
               <span>Entrar</span>
@@ -77,7 +77,7 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-700 hover:text-red-600"
+              className="p-2 text-white hover:text-red-200"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -86,7 +86,7 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t">
+          <div className="md:hidden py-4 border-t border-red-500">
             <div className="space-y-4">
               {/* Mobile Search */}
               <div className="relative">
@@ -96,14 +96,14 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
                   placeholder="Buscar restaurantes..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-full"
+                  className="pl-10 w-full bg-white text-gray-900"
                 />
               </div>
 
               {/* Mobile Location */}
               <button 
                 onClick={onLocationClick}
-                className="flex items-center space-x-2 text-gray-700 hover:text-red-600 w-full"
+                className="flex items-center space-x-2 text-white hover:text-red-200 w-full"
               >
                 <MapPin className="h-5 w-5" />
                 <span>Lisboa, Portugal</span>
@@ -113,13 +113,13 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
               <div className="flex items-center justify-between">
                 <button 
                   onClick={onCartClick}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-red-600"
+                  className="flex items-center space-x-2 text-white hover:text-red-200"
                 >
                   <ShoppingCart className="h-5 w-5" />
                   <span>Carrinho ({cartItemsCount})</span>
                 </button>
 
-                <Button variant="outline" onClick={onUserClick}>
+                <Button variant="outline" onClick={onUserClick} className="border-white text-white hover:bg-white hover:text-red-600">
                   Entrar
                 </Button>
               </div>
