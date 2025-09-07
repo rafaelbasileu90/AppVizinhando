@@ -4,11 +4,24 @@ import { Input } from './ui/input';
 import { Badge } from './ui/badge';
 import { MapPin, Search, ShoppingCart, User, Menu, X } from 'lucide-react';
 
-const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) => {
+const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick, onSearch }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim() && onSearch) {
+      onSearch(searchTerm.trim());
+    }
+  };
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit(e);
+    }
+  };
 
   return (
     <header className="bg-red-600 shadow-md sticky top-0 z-50">
@@ -34,16 +47,17 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
 
             {/* Search Bar */}
             <div className="flex-1 relative">
-              <div className="relative">
+              <form onSubmit={handleSearchSubmit} className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <Input
                   type="text"
                   placeholder="Buscar restaurantes ou pratos..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyPress={handleSearchKeyPress}
                   className="pl-10 w-full bg-white text-gray-900"
                 />
-              </div>
+              </form>
             </div>
           </div>
 
@@ -89,16 +103,17 @@ const Header = ({ cartItems = [], onLocationClick, onCartClick, onUserClick }) =
           <div className="md:hidden py-4 border-t border-red-500">
             <div className="space-y-4">
               {/* Mobile Search */}
-              <div className="relative">
+              <form onSubmit={handleSearchSubmit} className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <Input
                   type="text"
                   placeholder="Buscar restaurantes..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyPress={handleSearchKeyPress}
                   className="pl-10 w-full bg-white text-gray-900"
                 />
-              </div>
+              </form>
 
               {/* Mobile Location */}
               <button 
