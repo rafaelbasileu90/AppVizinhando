@@ -101,3 +101,131 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the Vizinhando backend API comprehensively including API status checks, restaurant API testing, categories API testing, data validation, and error handling"
+
+backend:
+  - task: "API Root Endpoint"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ GET /api/ endpoint working correctly - returns proper JSON response with 'Vizinhando API is running!' message"
+
+  - task: "Restaurants API Endpoint"
+    implemented: true
+    working: true
+    file: "backend/routes/restaurants.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ Initial test failed with HTTP 500 due to PyObjectId validation error in Pydantic model"
+        - working: true
+          agent: "testing"
+          comment: "✅ Fixed PyObjectId.validate() method to accept validation_info parameter for Pydantic v2 compatibility. GET /api/restaurants now returns 5 restaurants with proper Portuguese content including Taberna Real, Pizza da Nonna, etc."
+
+  - task: "Categories API Endpoint"
+    implemented: true
+    working: true
+    file: "backend/routes/categories.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ Initial test failed with HTTP 500 due to same PyObjectId validation error"
+        - working: true
+          agent: "testing"
+          comment: "✅ Fixed after PyObjectId correction. GET /api/categories returns 8 categories: Promocões, Portuguesa, Pizza, Sushi, Hambúrgueres, etc."
+
+  - task: "Restaurant By ID API"
+    implemented: true
+    working: true
+    file: "backend/routes/restaurants.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ GET /api/restaurants/{id} working correctly - successfully retrieves specific restaurant details"
+
+  - task: "Restaurant Menu API"
+    implemented: true
+    working: true
+    file: "backend/routes/restaurants.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "❌ Initial test failed with HTTP 500 - menu endpoint was returning raw data without proper model validation"
+        - working: true
+          agent: "testing"
+          comment: "✅ Fixed by importing MenuItem model and adding proper response validation. GET /api/restaurants/{id}/menu now returns properly formatted menu items (3 items found for Taberna Real)"
+
+  - task: "Restaurant Filtering API"
+    implemented: true
+    working: true
+    file: "backend/routes/restaurants.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ Both category and search filters working correctly - category filter returns 1 restaurant for 'Italiana', search filter returns 1 restaurant for 'pizza'"
+
+  - task: "API Error Handling"
+    implemented: true
+    working: true
+    file: "backend/routes/restaurants.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ Error handling working properly - invalid IDs return 400, non-existent resources return 404, non-existent endpoints return 404"
+
+  - task: "Data Validation and Portuguese Content"
+    implemented: true
+    working: true
+    file: "backend/routes/restaurants.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ Portuguese restaurant data validated successfully - found authentic Portuguese restaurants with proper names, descriptions, and cuisine types"
+
+frontend:
+  # Frontend testing not performed as per instructions
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "All backend API endpoints tested and working"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "testing"
+      message: "Comprehensive backend API testing completed successfully. Fixed two critical issues: 1) PyObjectId validation compatibility with Pydantic v2, 2) Restaurant menu endpoint model validation. All 10 test cases now pass including API connectivity, CRUD operations, filtering, error handling, and data validation. Portuguese restaurant data is properly seeded and accessible."
