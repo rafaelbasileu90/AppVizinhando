@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { mockCategories } from '../data/mock';
 
-const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
+const CategorySlider = ({ categories = [], onCategorySelect, selectedCategory }) => {
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
@@ -15,6 +14,18 @@ const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
       });
     }
   };
+
+  if (!categories || categories.length === 0) {
+    return (
+      <section className="py-8 bg-red-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Carregando categorias...</h2>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-8 bg-red-600">
@@ -46,12 +57,12 @@ const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
           className="flex space-x-4 overflow-x-auto scrollbar-hide pb-2"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {mockCategories.map((category) => (
+          {categories.map((category) => (
             <button
-              key={category.id}
+              key={category.id || category._id}
               onClick={() => onCategorySelect(category)}
               className={`flex-shrink-0 flex flex-col items-center p-4 rounded-lg border-2 transition-all duration-200 hover:shadow-md min-w-[100px] ${
-                selectedCategory?.id === category.id
+                selectedCategory?.id === category.id || selectedCategory?._id === category._id
                   ? 'border-white bg-red-500 shadow-md'
                   : 'border-red-400 bg-red-500 hover:border-white hover:bg-red-400'
               }`}
@@ -64,11 +75,7 @@ const CategorySlider = ({ onCategorySelect, selectedCategory }) => {
                   {category.icon}
                 </span>
               </div>
-              <span className={`text-sm font-medium text-center ${
-                selectedCategory?.id === category.id
-                  ? 'text-white'
-                  : 'text-white'
-              }`}>
+              <span className="text-sm font-medium text-center text-white">
                 {category.name}
               </span>
             </button>
