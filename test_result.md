@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the Vizinhando backend API comprehensively including API status checks, restaurant API testing, categories API testing, data validation, and error handling"
+user_problem_statement: "Test the Vizinhando frontend application comprehensively to ensure all UI functionality works correctly including homepage loading, header functionality, hero section, categories section, restaurant grid, interactive functionality, cart functionality, search feature, data integration, Portuguese content, responsive design, and MBWay payment integration"
 
 backend:
   - task: "API Root Endpoint"
