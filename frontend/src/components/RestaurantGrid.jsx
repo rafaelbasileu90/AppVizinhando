@@ -3,28 +3,14 @@ import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Filter, SlidersHorizontal } from 'lucide-react';
 import RestaurantCard from './RestaurantCard';
-import { mockRestaurants } from '../data/mock';
 
-const RestaurantGrid = ({ selectedCategory, onRestaurantClick }) => {
+const RestaurantGrid = ({ selectedCategory, restaurants = [], onRestaurantClick }) => {
   const [sortBy, setSortBy] = useState('relevance');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Filter restaurants based on selected category
+  // Filter and sort restaurants
   const filteredRestaurants = useMemo(() => {
-    let filtered = [...mockRestaurants];
-
-    if (selectedCategory && selectedCategory.name !== 'Promocões') {
-      filtered = filtered.filter(restaurant => 
-        restaurant.cuisine.toLowerCase().includes(selectedCategory.name.toLowerCase()) ||
-        restaurant.categories.some(cat => 
-          cat.toLowerCase().includes(selectedCategory.name.toLowerCase())
-        )
-      );
-    }
-
-    if (selectedCategory && selectedCategory.name === 'Promocões') {
-      filtered = filtered.filter(restaurant => restaurant.promo);
-    }
+    let filtered = [...restaurants];
 
     // Sort restaurants
     switch (sortBy) {
@@ -47,7 +33,19 @@ const RestaurantGrid = ({ selectedCategory, onRestaurantClick }) => {
     }
 
     return filtered;
-  }, [selectedCategory, sortBy]);
+  }, [restaurants, sortBy]);
+
+  if (!restaurants) {
+    return (
+      <section className="py-8 bg-red-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Carregando restaurantes...</h2>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-8 bg-red-600">
@@ -66,7 +64,7 @@ const RestaurantGrid = ({ selectedCategory, onRestaurantClick }) => {
           {/* Sort and Filter Controls */}
           <div className="flex items-center space-x-4">
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[180px] bg-white text-gray-900">
                 <SelectValue placeholder="Ordenar por" />
               </SelectTrigger>
               <SelectContent>
@@ -80,7 +78,7 @@ const RestaurantGrid = ({ selectedCategory, onRestaurantClick }) => {
             <Button
               variant="outline"
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 border-white text-white hover:bg-white hover:text-red-600"
             >
               <SlidersHorizontal className="h-4 w-4" />
               <span>Filtros</span>
@@ -163,7 +161,7 @@ const RestaurantGrid = ({ selectedCategory, onRestaurantClick }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredRestaurants.map((restaurant) => (
             <RestaurantCard
-              key={restaurant.id}
+              key={restaurant.id || restaurant._id}
               restaurant={restaurant}
               onClick={onRestaurantClick}
             />
@@ -173,13 +171,13 @@ const RestaurantGrid = ({ selectedCategory, onRestaurantClick }) => {
         {/* No Results */}
         {filteredRestaurants.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Filter className="h-12 w-12 text-gray-400" />
+            <div className="w-24 h-24 bg-red-800 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Filter className="h-12 w-12 text-white" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-white mb-2">
               Nenhum restaurante encontrado
             </h3>
-            <p className="text-gray-600">
+            <p className="text-red-100">
               Tente ajustar os filtros ou buscar por outra categoria.
             </p>
           </div>
