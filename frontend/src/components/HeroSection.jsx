@@ -5,10 +5,10 @@ import { Search, MapPin, Clock, Truck } from 'lucide-react';
 
 const HeroSection = ({ onSearchClick, onLocationClick }) => {
   return (
-    <section className="relative bg-gradient-to-br from-red-50 to-orange-50 py-16 lg:py-24">
+    <section className="relative bg-gradient-to-br from-red-700 to-red-500 py-16 lg:py-24">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23000000\" fill-opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"4\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"}}></div>
+        <div className="absolute inset-0" style={{backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"4\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"}}></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,11 +16,11 @@ const HeroSection = ({ onSearchClick, onLocationClick }) => {
           {/* Left Content */}
           <div className="space-y-8">
             <div className="space-y-4">
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-4xl lg:text-6xl font-bold text-white leading-tight">
                 Comida deliciosa
-                <span className="text-red-600 block">ao seu alcance</span>
+                <span className="text-red-200 block">ao seu alcance</span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-xl text-red-100 leading-relaxed">
                 Descubra os melhores restaurantes do seu bairro e receba suas refeições favoritas em minutos.
               </p>
             </div>
@@ -52,25 +52,25 @@ const HeroSection = ({ onSearchClick, onLocationClick }) => {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="flex items-center justify-center w-12 h-12 bg-red-100 rounded-full mx-auto mb-2">
-                  <Truck className="h-6 w-6 text-red-600" />
+                <div className="flex items-center justify-center w-12 h-12 bg-red-800 rounded-full mx-auto mb-2">
+                  <Truck className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-gray-900">500+</div>
-                <div className="text-sm text-gray-600">Restaurantes</div>
+                <div className="text-2xl font-bold text-white">500+</div>
+                <div className="text-sm text-red-200">Restaurantes</div>
               </div>
               <div className="text-center">
-                <div className="flex items-center justify-center w-12 h-12 bg-red-100 rounded-full mx-auto mb-2">
-                  <Clock className="h-6 w-6 text-red-600" />
+                <div className="flex items-center justify-center w-12 h-12 bg-red-800 rounded-full mx-auto mb-2">
+                  <Clock className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-gray-900">30min</div>
-                <div className="text-sm text-gray-600">Entrega média</div>
+                <div className="text-2xl font-bold text-white">30min</div>
+                <div className="text-sm text-red-200">Entrega média</div>
               </div>
               <div className="text-center">
-                <div className="flex items-center justify-center w-12 h-12 bg-red-100 rounded-full mx-auto mb-2">
-                  <MapPin className="h-6 w-6 text-red-600" />
+                <div className="flex items-center justify-center w-12 h-12 bg-red-800 rounded-full mx-auto mb-2">
+                  <MapPin className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-gray-900">15</div>
-                <div className="text-sm text-gray-600">Cidades</div>
+                <div className="text-2xl font-bold text-white">15</div>
+                <div className="text-sm text-red-200">Cidades</div>
               </div>
             </div>
           </div>
@@ -98,8 +98,8 @@ const HeroSection = ({ onSearchClick, onLocationClick }) => {
             </div>
 
             {/* Background Decoration */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-200 rounded-full opacity-20"></div>
-            <div className="absolute top-1/2 -right-8 w-16 h-16 bg-orange-200 rounded-full opacity-30"></div>
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-red-800 rounded-full opacity-20"></div>
+            <div className="absolute top-1/2 -right-8 w-16 h-16 bg-red-900 rounded-full opacity-30"></div>
           </div>
         </div>
       </div>
