@@ -186,7 +186,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="App min-h-screen bg-gray-50">
+      <div className="App min-h-screen bg-red-600 text-white">
         <Routes>
           <Route path="/*" element={renderCurrentView()} />
         </Routes>
