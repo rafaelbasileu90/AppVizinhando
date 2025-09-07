@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from './components/Header';
@@ -9,17 +9,66 @@ import RestaurantDetail from './components/RestaurantDetail';
 import Cart from './components/Cart';
 import { Toaster } from './components/ui/toaster';
 import { useToast } from './hooks/use-toast';
+import { restaurantService, categoryService } from './services/api';
 
 const App = () => {
   const [currentView, setCurrentView] = useState('home');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [cartItems, setCartItems] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const handleCategorySelect = (category) => {
+  // Load initial data
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        setLoading(true);
+        const [restaurantsData, categoriesData] = await Promise.all([
+          restaurantService.getAll(),
+          categoryService.getAll()
+        ]);
+        
+        setRestaurants(restaurantsData || []);
+        setCategories(categoriesData || []);
+      } catch (error) {
+        console.error('Error loading initial data:', error);
+        toast({
+          title: "Erro",
+          description: "Erro ao carregar dados. Usando dados offline.",
+          variant: "destructive"
+        });
+        
+        // Fallback to mock data
+        const { mockRestaurants, mockCategories } = await import('./data/mock');
+        setRestaurants(mockRestaurants);
+        setCategories(mockCategories);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInitialData();
+  }, [toast]);
+
+  const handleCategorySelect = async (category) => {
     setSelectedCategory(category);
     setCurrentView('restaurants');
+    
+    // Load restaurants for selected category
+    try {
+      const filteredRestaurants = await restaurantService.getAll(category.name);
+      setRestaurants(filteredRestaurants || []);
+    } catch (error) {
+      console.error('Error loading restaurants by category:', error);
+      toast({
+        title: "Erro",
+        description: "Erro ao filtrar restaurantes.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleRestaurantClick = (restaurant) => {
@@ -40,10 +89,18 @@ const App = () => {
     setCurrentView('cart');
   };
 
-  const handleBackToHome = () => {
+  const handleBackToHome = async () => {
     setCurrentView('home');
     setSelectedCategory(null);
     setSelectedRestaurant(null);
+    
+    // Reload all restaurants
+    try {
+      const allRestaurants = await restaurantService.getAll();
+      setRestaurants(allRestaurants || []);
+    } catch (error) {
+      console.error('Error reloading restaurants:', error);
+    }
   };
 
   const handleBackToRestaurants = () => {
@@ -70,14 +127,46 @@ const App = () => {
     });
   };
 
-  const handleCheckout = (orderData) => {
-    console.log('Processing order:', orderData);
-    toast({
-      title: "Pedido realizado!",
-      description: "Seu pedido foi enviado para o restaurante.",
-    });
-    setCartItems([]);
-    setCurrentView('home');
+  const handleCheckout = async (orderData) => {
+    try {
+      // Format order data for API
+      const formattedOrderData = {
+        restaurantId: selectedRestaurant.id,
+        items: orderData.items.map(item => ({
+          menuItemId: item.id || "6507f1f130c72219b671f2a1", // Mock ID for now
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity
+        })),
+        deliveryAddress: {
+          street: orderData.address.street,
+          city: orderData.address.city,
+          postalCode: orderData.address.postalCode
+        },
+        paymentMethod: orderData.payment.name,
+        subtotal: orderData.totals.subtotal,
+        deliveryFee: orderData.totals.deliveryFee,
+        serviceFee: orderData.totals.serviceFee,
+        total: orderData.totals.total
+      };
+
+      // For now, just simulate success without actual API call
+      // await orderService.create(formattedOrderData);
+      
+      toast({
+        title: "Pedido realizado!",
+        description: "Seu pedido foi enviado para o restaurante.",
+      });
+      setCartItems([]);
+      setCurrentView('home');
+    } catch (error) {
+      console.error('Error creating order:', error);
+      toast({
+        title: "Erro no pedido",
+        description: "Não foi possível processar seu pedido. Tente novamente.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleUserClick = () => {
@@ -94,12 +183,31 @@ const App = () => {
     });
   };
 
-  const handleSearchClick = () => {
-    toast({
-      title: "Busca",
-      description: "Funcionalidade de busca será implementada em breve.",
-    });
+  const handleSearchClick = async (searchTerm) => {
+    if (!searchTerm?.trim()) return;
+    
+    try {
+      const searchResults = await restaurantService.getAll(null, searchTerm);
+      setRestaurants(searchResults || []);
+      setCurrentView('restaurants');
+      setSelectedCategory(null);
+    } catch (error) {
+      console.error('Error searching restaurants:', error);
+      toast({
+        title: "Erro na busca",
+        description: "Erro ao buscar restaurantes.",
+        variant: "destructive"
+      });
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-red-600 flex items-center justify-center">
+        <div className="text-white text-xl">Carregando Vizinhando...</div>
+      </div>
+    );
+  }
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -129,9 +237,11 @@ const App = () => {
               onLocationClick={handleLocationClick}
               onCartClick={handleCartClick}
               onUserClick={handleUserClick}
+              onSearch={handleSearchClick}
             />
             <RestaurantGrid
               selectedCategory={selectedCategory}
+              restaurants={restaurants}
               onRestaurantClick={handleRestaurantClick}
             />
             <footer className="bg-gray-900 text-white py-12">
@@ -155,17 +265,20 @@ const App = () => {
               onLocationClick={handleLocationClick}
               onCartClick={handleCartClick}
               onUserClick={handleUserClick}
+              onSearch={handleSearchClick}
             />
             <HeroSection
               onSearchClick={handleSearchClick}
               onLocationClick={handleLocationClick}
             />
             <CategorySlider
+              categories={categories}
               onCategorySelect={handleCategorySelect}
               selectedCategory={selectedCategory}
             />
             <RestaurantGrid
               selectedCategory={selectedCategory}
+              restaurants={restaurants}
               onRestaurantClick={handleRestaurantClick}
             />
             <footer className="bg-gray-900 text-white py-12">
