@@ -1,10 +1,8 @@
 from fastapi import FastAPI, APIRouter
-from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
-import os
 import logging
-from pathlib import Path
+from config import MONGO_URL, DB_NAME
 
 # Import routes
 from routes.restaurants import router as restaurants_router
@@ -13,13 +11,9 @@ from routes.menu_items import router as menu_items_router
 from routes.users import router as users_router
 from routes.orders import router as orders_router
 
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
-
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+client = AsyncIOMotorClient(MONGO_URL)
+db = client[DB_NAME]
 
 # Create the main app
 app = FastAPI(title="Vizinhando API", version="1.0.0")
