@@ -1,0 +1,27 @@
+{
+  "name": "vizinhando",
+  "version": "1.0.0",
+  "description": "Vizinhando - Food Delivery Platform for Portugal (iFood Clone)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm start",
+    "dev:backend": "cd backend && uvicorn server:app --reload --host 0.0.0.0 --port 8001",
+    "build": "cd frontend && npm run build",
+    "seed": "cd backend && python seed_data.py",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "food delivery",
+    "portugal",
+    "ifood clone",
+    "react",
+    "fastapi",
+    "mongodb"
+  ],
+  "author": "Vizinhando Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  }
+}
