@@ -1,0 +1,38 @@
+# 🔒 Vizinhando - Code Owners & Protection
+
+# Global ownership - Protege todo o repositório
+* @SEU_USUARIO
+
+# Critical files - Requer aprovação especial
+package.json @SEU_USUARIO
+*/package.json @SEU_USUARIO
+requirements.txt @SEU_USUARIO
+*/requirements.txt @SEU_USUARIO
+
+# Deployment & Security files - Proteção máxima
+.github/ @SEU_USUARIO
+.github/workflows/ @SEU_USUARIO
+Dockerfile* @SEU_USUARIO
+docker-compose* @SEU_USUARIO
+
+# Environment files - Requer review cuidadoso  
+.env* @SEU_USUARIO
+*/.env* @SEU_USUARIO
+
+# Backend critical files
+backend/server.py @SEU_USUARIO
+backend/config.py @SEU_USUARIO
+backend/models/ @SEU_USUARIO
+backend/routes/ @SEU_USUARIO
+
+# Frontend critical files
+frontend/src/App.js @SEU_USUARIO
+frontend/src/services/ @SEU_USUARIO
+
+# Documentation
+README.md @SEU_USUARIO
+DEPLOYMENT.md @SEU_USUARIO
+
+# Security: No changes without explicit approval
+.github/workflows/security.yml @SEU_USUARIO
+.github/CODEOWNERS @SEU_USUARIO
