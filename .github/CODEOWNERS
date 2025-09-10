@@ -1,38 +1,45 @@
-# 🔒 Vizinhando - Code Owners & Protection
+🔒 Vizinhando - Code Owners & Protection
+Global ownership - Protege todo o repositório
 
-# Global ownership - Protege todo o repositório
-* @SEU_USUARIO
+rafaelbasileu90
 
-# Critical files - Requer aprovação especial
-package.json @SEU_USUARIO
-*/package.json @SEU_USUARIO
-requirements.txt @SEU_USUARIO
-*/requirements.txt @SEU_USUARIO
+Critical files - Requer aprovação especial
 
-# Deployment & Security files - Proteção máxima
-.github/ @SEU_USUARIO
-.github/workflows/ @SEU_USUARIO
-Dockerfile* @SEU_USUARIO
-docker-compose* @SEU_USUARIO
+package.json @rafaelbasileu90
+*/package.json @rafaelbasileu90
+requirements.txt @rafaelbasileu90
+*/requirements.txt @rafaelbasileu90
 
-# Environment files - Requer review cuidadoso  
-.env* @SEU_USUARIO
-*/.env* @SEU_USUARIO
+Deployment & Security files - Proteção máxima
 
-# Backend critical files
-backend/server.py @SEU_USUARIO
-backend/config.py @SEU_USUARIO
-backend/models/ @SEU_USUARIO
-backend/routes/ @SEU_USUARIO
+.github/ @rafaelbasileu90
+.github/workflows/ @rafaelbasileu90
+Dockerfile* @rafaelbasileu90
+docker-compose* @rafaelbasileu90
 
-# Frontend critical files
-frontend/src/App.js @SEU_USUARIO
-frontend/src/services/ @SEU_USUARIO
+Environment files - Requer review cuidadoso
 
-# Documentation
-README.md @SEU_USUARIO
-DEPLOYMENT.md @SEU_USUARIO
+.env* @rafaelbasileu90
+/.env @rafaelbasileu90
 
-# Security: No changes without explicit approval
-.github/workflows/security.yml @SEU_USUARIO
-.github/CODEOWNERS @SEU_USUARIO
+Backend critical files
+
+backend/server.py @rafaelbasileu90
+backend/config.py @rafaelbasileu90
+backend/models/ @rafaelbasileu90
+backend/routes/ @rafaelbasileu90
+
+Frontend critical files
+
+frontend/src/App.js @rafaelbasileu90
+frontend/src/services/ @rafaelbasileu90
+
+Documentation
+
+README.md @rafaelbasileu90
+DEPLOYMENT.md @rafaelbasileu90
+
+Security: No changes without explicit approval
+
+.github/workflows/security.yml @rafaelbasileu90
+.github/CODEOWNERS @rafaelbasileu90
